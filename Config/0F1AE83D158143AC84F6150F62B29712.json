@@ -1,0 +1,61 @@
+
+{
+    "Id": " EventHubToSQL",
+    "LineOfBusinessProcessData": [
+        {
+            "Key": "object",
+            "Type": "Xenhey.BPM.Core.Processes.ProcessData"
+        }
+    ],
+    "Type": "",
+  "DataFlowProcess": [
+    {
+      "Key": "QueryBuilderSQL",
+      "Type": "Xenhey.BPM.Core.Processes.QueryBuilderProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "QueryBuilderReplace",
+          "Value": "yes"
+        },
+        {
+          "Key": "statement",
+          "Value": "{\r\n    \"query\": \"exec dbo.tableName , @firstname, @lastname, @address, @address1, @state,@zipcode\",\r\n    \"queryparams\": [\r\n        {\r\n\t\t    \"ParameterName\": \"@firstname\",\r\n\t\t    \"Size\": \"128\",\r\n\t\t    \"DataType\": \"VarChar\",\r\n\t\t    \"Value\": \"@{firstname}\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"ParameterName\": \"@lastname\",\r\n\t\t    \"Size\": \"128\",\r\n\t\t    \"DataType\": \"VarChar\",\r\n\t\t    \"Value\": \"@{lastname}\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"ParameterName\": \"@address\",\r\n\t\t    \"Size\": \"128\",\r\n\t\t    \"DataType\": \"VarChar\",\r\n\t\t    \"Value\": \"@{address}\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"ParameterName\": \"@address1\",\r\n\t\t    \"Size\": \"128\",\r\n\t\t    \"DataType\": \"VarChar\",\r\n\t\t    \"Value\": \"@{address1}\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"ParameterName\": \"@state\",\r\n\t\t    \"Size\": \"128\",\r\n\t\t    \"DataType\": \"VarChar\",\r\n\t\t    \"Value\": \"@{state}\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"ParameterName\": \"@city\",\r\n\t\t    \"Size\": \"128\",\r\n\t\t    \"DataType\": \"VarChar\",\r\n\t\t    \"Value\": \"@{city}\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"ParameterName\": \"@zipcode\",\r\n\t\t    \"Size\": \"128\",\r\n\t\t    \"DataType\": \"VarChar\",\r\n\t\t    \"Value\": \"@{zipcode}\"\r\n\t\t}\r\n    ]\r\n}\r\n"
+        },
+        {
+          "Key": "filters",
+          "Value": "[{\"Key\":\"@{firstname}\",\"Value\":\"firstname\"},{\"Key\":\"@lastname}\",\"Value\":\"lastname\"},{\"Key\":\"@{address}\",\"Value\":\"address\"},{\"Key\":\"@{address1}\",\"Value\":\"address1\"},{\"Key\":\"@{state}\",\"Value\":\"state\"},{\"Key\":\"@{city}\",\"Value\":\"city\"},{\"Key\":\"@{zipcode}\",\"Value\":\"zipcode\"}]"
+        }
+      ]
+    },
+    {
+      "Key": "ConnectToDBProcess",
+      "Type": "Xenhey.BPM.Core.Processes.ConnectToDBProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "messageformat",
+          "Value": "application/json"
+        },
+        {
+          "Key": "connectionstring",
+          "Value": "<dbconnection>"
+        },
+        {
+          "Key": "queryparams",
+          "Value": "queryparams"
+        },
+        {
+          "Key": "query",
+          "Value": "query"
+        },
+        {
+          "Key": "UpdateDatabaseWithSecureParameters",
+          "Value": "Yes"
+        },
+      ]
+    }
+  ]
+}

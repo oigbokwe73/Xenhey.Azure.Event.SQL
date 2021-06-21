@@ -1,0 +1,48 @@
+{
+  "Id": "PayloadToEventHub"
+  "LineOfBusinessProcessData": [
+    {
+      "Key": "object",
+      "Type": "Xenhey.BPM.Core.Processes.ProcessData"
+    }
+  ],
+  "Type": "",
+  "DataFlowProcess": [
+    {
+      "Key": "Write-To-Event-Hub",
+      "Type": "Xenhey.BPM.Core.Processes.BlobStorageWriteProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "EventHubProcess",
+          "Type": "Xenhey.DevOps.Core.Processes.EventHubProcess",
+          "Async": "false",
+          "IsEnable": "true",
+          "DataFlowProcessParameters": [
+            {
+              "Key": "EventHubConnectionString",
+              "Value": "<EventConnection>"
+            },
+            {
+              "Key": "EventHubName",
+              "Value": "<eventhubName>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Key": "Successfully-Sent-Event-To-EventHub",
+      "Type": "Xenhey.BPM.Core.Processes.SuccessStatusProcess",
+      "Async": "false",
+      "IsEnable": "true",
+      "DataFlowProcessParameters": [
+        {
+          "Key": "Message",
+          "Value": "Request has successfully be sent to the EventHub"
+        }
+      ]
+    }
+  ]
+}

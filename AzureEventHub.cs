@@ -14,7 +14,7 @@ using System.Configuration;
 
 namespace Authenticare.Function
 {
-    public class AzureEventToSQL
+    public class AzureEventHub
     {
         private HttpRequest _req;
         private NameValueCollection nvc = new NameValueCollection();
