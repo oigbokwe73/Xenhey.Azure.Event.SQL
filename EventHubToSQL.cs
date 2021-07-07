@@ -12,12 +12,12 @@ using Xenhey.BPM.Core.Implementation;
 
 namespace Xenhey.Azure.Function.Event.SQL
 {
-    public  class EventHubToSQL
+    public static class EventHubToSQL
     {
-        private NameValueCollection nvc = new NameValueCollection();
+        private static NameValueCollection nvc = new NameValueCollection();
 
         [FunctionName("EventHubToSQL")]
-        public async Task Run([EventHubTrigger("samples-workitems", Connection = "EventHubConnectionAppSetting")] EventData[] events, ILogger log)
+        public static async Task Run([EventHubTrigger("samples-workitems", Connection = "EventHubConnectionAppSetting")] EventData[] events, ILogger log)
         {
 
             var exceptions = new List<Exception>();
@@ -26,7 +26,7 @@ namespace Xenhey.Azure.Function.Event.SQL
             {
                 try
                 {
-                    string messageBody = Encoding.UTF8.GetString(eventData.Body);
+                    string messageBody = Encoding.UTF8.GetString(eventData.Body.Array, eventData.Body.Offset, eventData.Body.Count);
 
                     var results = orchrestatorService.Run(messageBody);
                     log.LogInformation($"EnqueuedTimeUtc={eventData.SystemProperties.EnqueuedTimeUtc}");
@@ -48,10 +48,11 @@ namespace Xenhey.Azure.Function.Event.SQL
             if (exceptions.Count == 1)
                 throw exceptions.Single();
         }
-        private IOrchrestatorService orchrestatorService
+        private static  IOrchrestatorService orchrestatorService
         {
             get
             {
+                //The name,value pair should be changed. Sees documentation
                 nvc.Add("x-api-key", "0F1AE83D158143AC84F6150F62B29712");
                 return new ManagedOrchestratorService(nvc);
             }
