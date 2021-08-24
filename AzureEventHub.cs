@@ -12,7 +12,7 @@ using Xenhey.BPM.Core;
 using Xenhey.BPM.Core.Implementation;
 using System.Configuration;
 
-namespace Authenticare.Function
+namespace Xenhey.Function
 {
     public class AzureEventHub
     {
