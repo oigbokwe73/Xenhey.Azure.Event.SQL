@@ -12,7 +12,7 @@ using Xenhey.BPM.Core;
 using Xenhey.BPM.Core.Implementation;
 using System.Configuration;
 
-namespace Xenhey.Function
+namespace Xenhey.Azure.Function.HttpTrigger
 {
     public class AzureEventHub
     {
